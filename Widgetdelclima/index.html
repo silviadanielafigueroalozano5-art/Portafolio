@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Widget del Clima</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #6bc6ec, #0e5fda);
+        color: white;
+    }
+
+    .tarjeta {
+        width: 90%;
+        margin: 50px auto;
+    }
+
+    #ciudad {
+        font-size: 50px;
+    }
+
+    .top {
+        overflow: hidden;
+    }
+
+    .izquierda {
+        float: left;
+        width: 55%;
+    }
+
+    .derecha {
+        float: right;
+        width: 40%;
+        text-align: right;
+    }
+
+    .derecha h1 {
+        font-size: 80px;
+        margin: 5px;
+    }
+
+    #ícono {
+        font-size: 300px;
+    }
+
+    .días {
+        margin-top: 80px;
+
+    }
+
+    .días div {
+        float: left;
+        width: 11%;
+        margin: 1%;
+        padding: 20px 5px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 20px;
+        text-align: center;
+        font-size: 30px;
+    }
+
+    .emoji {
+        font-size: 70px;
+    }
+</style>
+
+<body>
+    <div class="tarjeta">
+        <div class="top">
+            <div class="izquierda">
+                <div id="ciudad">
+                    <h1>San Gil</h1>
+                </div>
+                <h1>Hoy Martes, 3 de Marzo</h1>
+                <h2>parcialmente nublado</h2>
+                <h3>sensación térmica de 18°</h3>
+                <h3>💧humedad:88%</h3>
+                <h3>🌬️viento:0 km/h</h3>
+                <h3>☔precipitaciones: 20%</h3>
+            </div>
+            <div class="derecha">
+                <div id="temperatura">
+                </div>
+                <h1>22° C </h1>
+                <div id="ícono">⛅
+                </div>
+            </div>
+        </div>
+        <div class="días">
+            <div id="martes">
+                <span class="emoji">🌦️</span>
+                <h3>Martes</h3>
+                <h3>25°C/18°C</h3>
+            </div>
+            <div id="miércoles">
+                <span class="emoji">🌧️</span>
+                <h3>Miércoles</h3>
+                <h3>25°C/15°C</h3>
+            </div>
+            <div id="jueves">
+                <span class="emoji">🌧️</span>
+                <h3>Jueves</h3>
+                <h3>25°C/16°C</h3>
+            </div>
+            <div id="viernes">
+                <span class="emoji">🌩️</span>
+                <h3>Viernes</h3>
+                <h3>25°C/16°C</h3>
+            </div>
+            <div id="sábado">
+                <span class="emoji">⛈️</span>
+                <h3>Sábado</h3>
+                <h3>25°C/16°C</h3>
+            </div>
+            <div id="domingo">
+                <span class="emoji">🌩️</span>
+                <h3>Domingo</h3>
+                <h3>24°C/16°C</h3>
+            </div>
+            <div id="lunes">
+                <span class="emoji">🌩️</span>
+                <h3>Lunes</h3>
+                <h3>23°C/16°C</h3>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

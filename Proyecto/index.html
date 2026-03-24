@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Portafolio</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f4f4f4;
+        }
+
+        .menu {
+            background: #3c3c3c;
+            color: white;
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        .menu .logo {
+            float: left;
+            font-weight: bold;
+        }
+
+        .menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            float: right;
+        }
+
+        .menu ul li {
+            float: left;
+            margin-left: 20px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .quien {
+            background: white;
+            padding: 60px;
+            overflow: hidden;
+        }
+
+        .quien .foto {
+            width: 30%;
+            float: left;
+            text-align: right;
+        }
+
+        .quien .foto img {
+            width: 250px;
+            border-radius: 5px;
+        }
+
+        .quien .texto {
+            width: 65%;
+            float: left;
+            margin-left: 20px;
+        }
+
+        .quien h2 {
+            margin-top: 0;
+            color: #444;
+        }
+
+        .quien p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+
+        .frase {
+            background: #ff5722;
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .frase img {
+            margin-bottom: 5px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+        }
+
+        .frase p {
+            width: 600px;
+            margin: auto;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            background: #ff5722;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+        }
+
+        .btn:hover {
+            background: #e64a19;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 40px 0;
+            color: #555;
+        }
+
+        .proyectos {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .tarjeta {
+            width: 22%;
+            background: white;
+            border-radius: 5px;
+            float: left;
+            margin: 1.5%;
+            text-align: center;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .tarjeta img {
+            width: 100%;
+            height: 160px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .tarjeta h3 {
+            margin: 15px 0 10px;
+        }
+
+        .tarjeta p {
+            padding: 0 15px;
+            color: #666;
+        }
+
+        .footer {
+            background: #3c3c3c;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+            clear: both;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="menu">
+
+        <div class="logo">Silvia Daniela</div>
+
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">¿Quién soy?</a></li>
+            <li><a href="#">Proyectos</a></li>
+        </ul>
+
+    </div>
+
+    <div class="quien">
+
+        <div class="foto">
+            <img src="rostro.jpg">
+        </div>
+
+        <div class="texto">
+
+            <h2>¿Quién soy?</h2>
+
+            <p>
+                Soy Silvia Daniela, estudiante interesada en el desarrollo web,
+                el diseño digital. Actualmente estoy aprendiendo HTML y CSS
+                mientras desarrollo mis primeros proyectos web.
+            </p>
+
+            <p>
+                Me gusta crear páginas web, aprender nuevas tecnologías
+                y mejorar mis habilidades en programación y diseño.
+            </p>
+
+            <a href="#" class="btn">Leer más</a>
+
+        </div>
+
+    </div>
+
+    <div class="frase">
+
+        <img src="idea.jpg" width="150">
+
+        <p>
+            La creatividad y la tecnología pueden unirse para crear cosas increíbles.
+            Cuando combinamos imaginación con herramientas digitales podemos construir
+            proyectos que inspiren, resuelvan problemas y transformen ideas en realidad.
+        </p>
+
+        <br>
+
+        <i>- Silvia Daniela</i>
+
+    </div>
+
+    <h1>Mis proyectos</h1>
+
+    <div class="proyectos">
+
+        <div class="tarjeta">
+
+            <img src="proyecto1.webp">
+
+            <h3>Proyecto 1</h3>
+
+            <p>Página web básica desarrollada con HTML y CSS,
+                Su objetivo fue aprender la estructura de una página web, el uso de etiquetas principales y la
+                aplicación de estilos para mejorar la presentación visual</p>
+
+            <a href="#" class="btn">Ver proyecto</a>
+
+        </div>
+
+        <div class="tarjeta">
+
+            <img src="proyecto2.png">
+
+            <h3>Proyecto 2</h3>
+
+            <p>Widget del clima realizado con HTML y CSS, muestra información como la ciudad, la temperatura y el estado
+                del clima utilizando un diseño visual sencillo</p>
+
+            <a href="#" class="btn">Ver proyecto</a>
+
+        </div>
+
+        <div class="tarjeta">
+
+            <img src="proyecto3.png">
+
+            <h3>Proyecto 3</h3>
+
+            <p>Diseño de hoja de vida digital, El objetivo fue organizar información información personal, académica y
+                de habilidades en una página web clara y fácil de leer</p>
+
+            <a href="#" class="btn">Ver proyecto</a>
+
+        </div>
+
+        <div class="tarjeta">
+
+            <img src="proyecto4.png">
+
+            <h3>Proyecto 4</h3>
+
+            <p>En este proyecto personal de página web esperimente con diferentes estilos siguiendo un modelo
+                proporcionado, use estilos y elementos con el objetivo de mejorar mis habilidades en CSS</p>
+
+            <a href="#" class="btn">Ver proyecto</a>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        Copyright © 2026 - Todos los derechos reservados
+
+    </div>
+
+</body>
+
+</html>
