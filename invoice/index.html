@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Factura</title>
+
+  <style>
+    /*cuerpo de la pag*/
+
+    body {
+      margin: 0;
+      background: white;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /*encabezado*/
+    .header {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      grid-template-rows: 50px 40px;
+      height: 10vw;
+      font-size: 16px;
+    }
+
+    /* Figura izquierda */
+    .header-figura-izquierda {
+      grid-column: 1;
+      grid-row: 1;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      padding: 8.8vw;
+      clip-path: polygon(0 0, 100% 0, 76% 100%, 0 100%);
+      width: 65%;
+    }
+
+    .eslogan img {
+      width: 5vw;
+      height: 5vw;
+      margin: -5vw 0vw -5vw -3vw;
+    }
+
+    /* Figura derecha */
+    .header-figura-derecha {
+      grid-column: 1/3;
+      grid-row: 1;
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      justify-self: end;
+      width: 50vw;
+      overflow: hidden;
+      padding: 10vw;
+      clip-path: polygon(30.8% 17%, 100% 17%, 100% 100%, 14.8% 100%);
+    }
+
+
+
+    /* franja vertical */
+    .franja {
+      grid-column: 1/3;
+      grid-row: 1;
+      background: rgb(73, 125, 177);
+      color: white;
+      justify-self: end;
+      width: 50%;
+      overflow: hidden;
+      padding: 10.5vw;
+      clip-path: polygon(40% -10%, 43.5% 0%, 23% 100%, 17.5% 100%);
+      z-index: 2;
+    }
+
+    /* franja superior */
+    .franja-superior {
+      grid-column: 1/3;
+      grid-row: 1;
+      background: rgb(73, 125, 177);
+      color: white;
+      justify-self: end;
+      width: 50%;
+      overflow: hidden;
+      padding: 2vw;
+      clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 20% 100%);
+    }
+
+    .footer {
+      display: flex;
+      height: 5.5vw;
+    }
+
+    .franja-abajo-izquierda {
+      background: rgb(73, 125, 177);
+      overflow: hidden;
+      width: 18vw;
+      clip-path: polygon(0% 20%, 100% 20%, 84% 100%, 0% 100%);
+      z-index: 2;
+    }
+
+    .franja-abajo-derecha {
+      background: black;
+      overflow: hidden;
+      width: 82vw;
+      clip-path: polygon(4.5% 0%, 100% 0%, 100% 100%, 0.2% 100%);
+    }
+
+    .company {
+      font-size: 2.5vw;
+      color: white;
+      letter-spacing: 0.26vw;
+      margin-left: 2vw;
+    }
+
+    .p {
+      font-size: 0.8vw;
+      height: 50%;
+      letter-spacing: 0.1vw;
+      color: white;
+      margin-top: 0.3vw;
+    }
+
+    .invoice {
+      font-size: 4.2vw;
+      text-align: right;
+      margin: 4vw 0vw 0.5vw 0;
+      color: rgb(73, 125, 177);
+    }
+
+    .p1 {
+      font-size: 0.9vw;
+      margin: 0;
+      color: white;
+    }
+
+    .fila {
+      justify-content: space-between;
+    }
+
+    .fila b {
+      text-align: left;
+      margin-left: 30vw;
+    }
+
+    .fila span {
+      text-align: right;
+    }
+
+    .info {
+      width: 100;
+      height: 15vw;
+      margin: 15vw 5vw 5vw 5vw;
+    }
+
+    .cliente h3 {
+      font-size: 1.5vw;
+      color: rgb(73, 125, 177);
+    }
+
+    .p2 {
+      font-size: 2.6vw;
+      margin: -1vw 0 0 0vw;
+    }
+
+    .p3 {
+      font-size: 1.2vw;
+      letter-spacing: 0.1vw;
+    }
+
+    .pago h3 {
+      font-size: 1.7vw;
+      color: rgb(73, 125, 177);
+      text-align: right;
+      margin: -11vw 13% -10vw 0vw;
+    }
+
+    .p4 {
+      display: flex;
+      font-size: 1.1vw;
+      text-align: left;
+      margin: -19vw 0 0 2vw;
+    }
+
+    .fila1 {
+      font-size: 1.1vw;
+      text-align: left;
+      margin: 20vw 0 0 72%;
+      line-height: 2.5vw;
+    }
+
+    .fila2 {
+      font-size: 1.1vw;
+      text-align: left;
+      margin: 20vw 0 0 5vw;
+      line-height: 0.2vw;
+    }
+
+    /* TABLA */
+    .tabla,
+    .resumen {
+      padding-left: 5vw;
+      padding-right: 5vw;
+    }
+
+    .tabla {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      overflow-x: auto;
+    }
+
+    .fila {
+      display: flex;
+      gap: 0.5vw;
+      margin-bottom: 1vw;
+    }
+
+    /* ENCABEZADO */
+    .encabezado .celda {
+      background: rgb(73, 125, 177);
+      color: #fff;
+    }
+
+    /* CELDAS */
+    .celda {
+      padding: 1.8vw;
+      font-size: 1.4vw;
+      height: 2vw;
+    }
+
+    .celda.peque {
+      text-align: center;
+    }
+
+    /* RESUMEN */
+    .resumen {
+      padding-bottom: 5vw;
+    }
+
+    .resumen-box {
+      width: 100%;
+    }
+
+    .resumen-box div {
+      display: flex;
+      justify-content: space-between;
+      margin: 2vw 4.6vw 0 2vw;
+      font-size: 1.4vw;
+      text-align: right;
+    }
+
+    #total {
+      background: rgb(73, 125, 177);
+      color: #fff;
+      padding: 0.5vw;
+      display: flex;
+      align-items: center;
+      width: 88.7vw;
+      margin: 3vw 0vw 5vw 0;
+    }
+
+    #total p {
+      margin-right: 3.8vw;
+      margin-left: 1.6vw;
+      font-size: 1.5vw;
+    }
+
+    /* Anchos personalizados por columna */
+    .fila .celda:nth-child(1) {
+      /* FECHA */
+      flex: 1;
+    }
+
+    .fila .celda:nth-child(2) {
+      /* DESCRIPCIÓN */
+      flex: 3;
+    }
+
+    .fila .celda:nth-child(3) {
+      /* PRECIO */
+      flex: 1;
+    }
+
+    .fila .celda:nth-child(4) {
+      /* CANTIDAD */
+      flex: 0.6;
+    }
+
+    .fila .celda:nth-child(5) {
+      /* TOTAL */
+      flex: 1;
+    }
+
+    /* Filas intercaladas */
+    .tabla .fila:nth-child(even):not(.encabezado) {
+      background: #fff;
+    }
+
+    .tabla .fila:nth-child(odd):not(.encabezado) .celda {
+      background: #e7e7e7;
+    }
+
+    .terminos {
+      margin: -8vw 40vw 10vw 5vw;
+      font-size: 2vw;
+    }
+
+    .terminos p {
+      margin: -2vw 0 0 0;
+      line-height: 3vw;
+      font-size: 1.5vw;
+    }
+
+    .linea {
+      border-top: 0.1vw solid rgb(97, 96, 96);
+      width: 22vw;
+      margin: -20vw 5vw -8vw 73vw;
+    }
+
+    .firma {
+      text-align: right;
+      margin: 10vw 8.5vw 8vw 0vw;
+      font-size: 2vw;
+    }
+
+    .firma .p6 {
+      font-size: 1.5vw;
+      margin-right: 0.5vw;
+      margin-top: -1.5vw;
+    }
+
+    .foto-firma img {
+      width: 25vw;
+      margin: -20vw 0 20vw 71.6vw;
+    }
+
+
+    /* 📱 RESPONSIVE GENERAL */
+    @media (max-width: 570px) {
+
+      /* HEADER */
+      .header {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;
+        width: auto;
+      }
+
+      .header-figura-izquierda {
+        width: 50%;
+        padding-left: 5px;
+        padding-right: 30px;
+        overflow: hidden;
+        clip-path: none;
+
+      }
+
+      .header-figura-derecha {
+        clip-path: none;
+        width: 40%;
+        padding: 12px;
+      }
+
+      .franja,
+      .franja-superior {
+        display: none;
+      }
+
+      .eslogan img {
+        width: 35px;
+        height: auto;
+        margin: 0px 0px 10px 15px;
+      }
+
+      .company {
+        font-size: 18px;
+        margin-left: 50px;
+        margin-top: -50px;
+      }
+
+      .p {
+        font-size: 6.8px;
+      }
+
+      .invoice {
+        font-size: 25px;
+        margin-left: 0px;
+        margin-right: 10px;
+        text-align: left;
+        margin-top: 5px;
+      }
+
+      .p1 {
+        font-size: 10px;
+        width: 100%;
+      }
+
+      .fila b {
+        margin-left: 0px;
+        margin-right: 10px;
+
+      }
+
+      .fila {
+        display: flex;
+        margin-right: 10px;
+        margin-left: 0px;
+      }
+
+      /* INFO CLIENTE*/
+      .info {
+        margin: 20px;
+        height: auto;
+      }
+
+      .cliente h3,
+      .pago h3 {
+        font-size: 16px;
+        text-align: left;
+        margin: auto;
+        margin-top: 40px;
+      }
+
+      .pago h3 {
+        margin-top: 30px;
+        margin-left: auto;
+      }
+
+      .p2 {
+        font-size: 18px;
+        margin-left: auto;
+        margin-top: 5px;
+      }
+
+      .p3 {
+        font-size: 12px;
+        margin-left: auto;
+        margin-top: 5px;
+      }
+
+      .p4 {
+        flex-direction: column;
+        margin-left: -8px;
+        margin-top: 5px;
+      }
+
+      .fila1 {
+        font-size: 12px;
+        margin: auto;
+        line-height: 30px;
+        margin-left: 10px;
+      }
+
+      .fila2 {
+        margin-left: 100px;
+        margin-top: -88px;
+        line-height: 2.8px;
+        font-size: 12px;
+      }
+
+      /* TABLA */
+      .celda {
+        font-size: 12px;
+        padding: 10px;
+        height: auto;
+        min-width: 120px;
+      }
+
+      /* RESUMEN */
+      .resumen-box div {
+        font-size: 14px;
+        margin: 10px 5px 10px 10px;
+      }
+
+      #total {
+        width: 100%;
+      }
+
+      #total p {
+        font-size: 14px;
+        margin: 5px 10px;
+      }
+
+      /* TERMINOS */
+      .terminos {
+        margin-left: 35px;
+        margin-bottom: 50px;
+        font-size: 14px;
+      }
+
+      .terminos p {
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      /* FIRMA */
+      .firma {
+        text-align: left;
+        margin: 35px;
+        font-size: 16px;
+      }
+
+      .firma .p6 {
+        font-size: 12px;
+      }
+
+      .foto-firma img {
+        width: 150px;
+        margin: 0;
+        margin-left: 20px
+      }
+
+      .linea {
+        width: 150px;
+        margin: 0;
+        margin-left: 35px;
+      }
+
+      /* FOOTER */
+      .footer {
+        width: auto;
+        height: 30px;
+      }
+
+      .franja-abajo-izquierda {
+        width: 20%;
+        height: 100%;
+      }
+
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <section class="header">
+    <div class="header-figura-izquierda">
+      <div class="eslogan">
+        <img src="eslogan.jpeg">
+      </div>
+
+      <div class="company"><b>EMPRESA</b>
+        <p class="p">ESLOGAN DE EMPRESA AQUÍ</p>
+      </div>
+    </div>
+
+    <div class="franja"></div>
+
+    <div class="franja-superior"></div>
+
+    <div class="header-figura-derecha">
+      <div class="invoice"><b>FACTURA</b></div>
+      <div class="p1">
+        <div class="fila">
+          <b>Número de Factura:</b>
+          <span>#123456</span>
+        </div>
+        <div class="fila">
+          <b>No. Cuenta:</b>
+          <span>1234 5678 9101</span>
+        </div>
+        <div class="fila">
+          <b>Fecha Factura:</b>
+          <span>Abril 21 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-vacio"></div>
+
+  </section>
+  <main>
+    <main class="contenido">
+
+      <section class="info">
+        <div class="cliente">
+          <h3>FACTURAR A:</h3>
+          <p class="p2"><b>Jhone Doe.</b></p>
+          <p class="p3">Director General, Company Ltd.</p>
+          <p class="p3">Tel: +123 4567 8910</p>
+          <p class="p3">Email: example@email.com</p>
+        </div>
+
+        <div class="pago">
+          <h3>Método de Pago</h3>
+          <div class="p4">
+            <div class="fila1">
+              <b>Cuenta Num:</b><br>
+              <b>Nombre:</b><br>
+              <b>Banco Num:</b><br>
+            </div>
+            <div class="fila2">
+              <p>1234 5678 910</p><br>
+              <p>Jhone Doe.</p><br>
+              <p> VYZ</p><br>
+            </div>
+          </div>
+      </section>
+      <!-- TABLA -->
+      <div class="tabla">
+
+        <div class="fila encabezado">
+          <div class="celda">FECHA</div>
+          <div class="celda">DESCRIPCIÓN</div>
+          <div class="celda peque">PRECIO</div>
+          <div class="celda peque">CANT.</div>
+          <div class="celda peque">TOTAL</div>
+        </div>
+
+        <div class="fila">
+          <div class="celda">Abril 21, 2026</div>
+          <div class="celda">Diseño de tarjetas empresariales</div>
+          <div class="celda peque">$300</div>
+          <div class="celda peque">2</div>
+          <div class="celda peque">$600.00</div>
+        </div>
+
+        <div class="fila">
+          <div class="celda">Abril 21, 2026</div>
+          <div class="celda">Diseño de volante publicitario</div>
+          <div class="celda peque">$455</div>
+          <div class="celda peque">1</div>
+          <div class="celda peque">$450.00</div>
+        </div>
+
+        <div class="fila">
+          <div class="celda">Abril 21, 2026</div>
+          <div class="celda">Diseño de interfaz de aplicación</div>
+          <div class="celda peque">$300</div>
+          <div class="celda peque">1</div>
+          <div class="celda peque">$300.00</div>
+        </div>
+
+        <div class="fila">
+          <div class="celda">Abril 21, 2026</div>
+          <div class="celda">Desarrollo de tema</div>
+          <div class="celda peque">$150</div>
+          <div class="celda peque">3</div>
+          <div class="celda peque">$450.00</div>
+        </div>
+
+        <div class="fila">
+          <div class="celda">Abril 20, 2026</div>
+          <div class="celda">Diseño de identidad corporativa</div>
+          <div class="celda peque">$150</div>
+          <div class="celda peque">1</div>
+          <div class="celda peque">$150.00</div>
+        </div>
+
+        <div class="fila">
+          <div class="celda">Abril 19, 2026</div>
+          <div class="celda">Diseño de logotipo creativo</div>
+          <div class="celda peque">$200</div>
+          <div class="celda peque">1</div>
+          <div class="celda peque">$200.00</div>
+        </div>
+
+      </div>
+
+      <!-- RESUMEN -->
+      <div class="resumen">
+        <div class="resumen-box">
+          <div><span>Subtotal:</span><span>$3150.00</span></div>
+          <div><span>Descuento:</span><span>$0.00</span></div>
+          <div><span>Impuesto (10%):</span><span>$315.00</span></div>
+          <div id="total">
+            <p>Total:</p>
+            <p>$3465.00</p>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- TERMINOS -->
+      <div class="terminos">
+        <h4><b>Términos y Condiciones:</b></h4>
+        <p>El pago debe realizarse dentro de los 15 días hábiles establecidos. Retrasos generan cargos adicionales sobre
+          el costo de la factura. No hay devoluciones
+          después de que la entrega se haya realizado. </p>
+      </div>
+
+      <div class="foto-firma">
+        <img src="Firma.jpeg">
+      </div>
+
+      <div class="linea"></div>
+      <div class="firma">
+        <p class="p5"><b>Nombre y firma</b>
+        <p class="p6"><b>Gerente de cuentas</b></p>
+      </div>
+
+
+
+    </main>
+
+    <footer class="footer">
+      <div class="franja-abajo-izquierda"></div>
+      <div class="franja-abajo-derecha"></div>
+    </footer>
+</body>
+
+</html>
