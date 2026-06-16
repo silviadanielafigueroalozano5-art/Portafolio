@@ -1,0 +1,1489 @@
+:root {
+    --color-primary:        #c7793a;
+    --color-primary-hover:  #b56a2e;
+    --color-dark:           #46271b;
+    --color-dark-a:         #46271bf6;
+    --color-header:         #c2a27ab6;
+    --color-cream:          #ebddcd;
+    --color-bg:             #f1f0ee;
+    --color-bg-testimonios: #f8f5f2;
+    --color-text-muted:     #666;
+    --color-text-light:     #e0c4b0;
+    --font-title:           'Lato', sans-serif;
+    --font-body:            'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    --font-brand:           'Lucida Sans', 'Lucida Grande', Geneva, Verdana, sans-serif;
+    --radius-btn:           2.6vw;
+    --radius-img:           50%;
+    --divider:              #c7793a;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+header {
+    height: 5.6vw;
+    background-color: var(--color-header);
+}
+
+a {
+    text-decoration: none;
+}
+
+.nav-box {
+    height: 5.1vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 13%;
+}
+
+.text1 {
+    font-size: 2.4vw;
+    font-family: var(--font-brand);
+    font-weight: 900;
+    -webkit-text-stroke: 1px #000000;
+    color: #000000;
+    margin: auto;
+    font-weight: bolder;
+    letter-spacing: -0.1vw;
+}
+
+.box-right {
+    display: flex;
+    align-items: flex-start;
+    gap: 2vw;
+    font-size: 1.5vw;
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: -0.15vw;
+}
+
+.box-right a {
+    color: black;
+}
+
+.pagina-activa {
+    display: block;
+    font-size: 0.6vw;
+    font-weight: 400;
+    text-align: center;
+    letter-spacing: normal;
+}
+
+.hamburger-toggle {
+    display: none;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 0.26vw;
+    cursor: pointer;
+    padding: 0.31vw;
+}
+
+.hamburger span {
+    display: block;
+    width: 1.35vw;
+    height: 0.16vw;
+    border-radius: 0.16vw;
+    transition: all 0.3s ease;
+}
+
+.hamburger-toggle:checked+.hamburger span:nth-child(1) {
+    transform: translateY(0.42vw) rotate(45deg);
+}
+
+.hamburger-toggle:checked+.hamburger span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-toggle:checked+.hamburger span:nth-child(3) {
+    transform: translateY(-0.42vw) rotate(-45deg);
+}
+
+
+/* HERO */
+.hero-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.imagen2 {
+    width: 100vw;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.text2 {
+    position: absolute;
+    top: 14%;
+    left: 13%;
+    color: white;
+    font-size: clamp(2vw, 5vw, 4.5vw);
+    font-family: var(--font-title);
+    max-width: 45%;
+}
+
+.texto-descripcion {
+    position: absolute;
+    top: 35%;
+    left: 13%;
+    color: white;
+    font-size: 1vw;
+    max-width: 28%;
+    line-height: 1.6;
+    font-family: var(--font-body);
+}
+
+.contenedor-botones {
+    position: absolute;
+    top: 43%;
+    left: 13%;
+    display: flex;
+    gap: 1vw;
+}
+
+.boton-blanco {
+    background-color: white;
+    border: none;
+    padding: 0.9vw 1.2vw;
+    border-radius: var(--radius-btn);
+    font-size: 0.7vw;
+    font-family: var(--font-body);
+    cursor: pointer;
+}
+
+.boton-naranja {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.9vw 1.2vw;
+    border-radius: var(--radius-btn);
+    font-size: 0.7vw;
+    font-family: var(--font-body);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+/* FEATURRESS */
+.seccion-destacados {
+    background-color: var(--color-bg);
+    padding: 4vw 8vw;
+    text-align: center;
+}
+
+.titulo-destacados {
+    font-family: var(--font-body);
+    font-size: 2.5vw;
+    font-weight: 900;
+    margin-top: -1.5vw;
+    margin-bottom: 1.5vw;
+    color: #000000;
+}
+
+.contenedor-tarjetas {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+}
+
+.tarjeta-cafe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vw;
+    max-width: 23%;
+    padding: 0 2vw;
+}
+
+.linea-vertical {
+    width: 0.05vw;
+    height: 10vw;
+    background-color: var(--divider);
+    align-self: flex-end;
+    margin-bottom: -1vw;
+}
+
+.tarjeta-texto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vw;
+    text-align: center;
+}
+
+.tarjeta-cafe img {
+    width: 6vw;
+    height: 6vw;
+    border-radius: var(--radius-img);
+    object-fit: cover;
+}
+
+.tarjeta-cafe h3 {
+    font-family: var(--font-body);
+    font-size: 2vw;
+    font-weight: 700;
+    color: #000000;
+}
+
+.tarjeta-cafe p {
+    font-family: var(--font-body);
+    font-size: 0.8vw;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    text-align: center;
+}
+
+
+/* WHY CHOOSE US */
+
+.porque-izquierda h2 {
+    font-family: var(--font-title);
+    font-size: 2.5vw;
+    color: white;
+    font-weight: 700;
+    margin-top: -4vw;
+}
+
+.porque-izquierda p {
+    font-family: var(--font-body);
+    font-size: 0.8vw;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    max-width: 80%;
+    margin-top: -1vw;
+}
+
+.boton-blanco-oscuro {
+    background-color: white;
+    border: none;
+    padding: 0.8vw 2vw;
+    border-radius: var(--radius-btn);
+    font-size: 0.7vw;
+    font-family: var(--font-body);
+    cursor: pointer;
+    width: fit-content;
+}
+
+.horario-label {
+    font-family: var(--font-body);
+    font-size: 1.5vw;
+    position: relative;
+    top: 0.56vw;
+    right: 4vw;
+    color: #000000;
+    font-weight: 700;
+    text-align: center;
+}
+
+.horario-hora {
+    font-family: var(--font-title);
+    font-size: 2.5vw;
+    color: #000000;
+    font-weight: 900;
+    top: -0.56vw;
+    text-align: center;
+    position: relative;
+    right: 4vw;
+}
+
+.horario-descripcion {
+    font-family: var(--font-body);
+    font-size: 0.85vw;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-right: 10vw;
+    position: relative;
+    top: -1.13vw;
+    margin-left: 3vw;
+    text-align: center;
+}
+
+.boton-horario {
+    background-color: var(--color-dark-a);
+    color: white;
+    border: none;
+    padding: 1vw 2.5vw;
+    border-radius: var(--radius-btn);
+    font-size: 0.8vw;
+    font-family: var(--font-body);
+    cursor: pointer;
+    width: fit-content;
+    position: relative;
+    left: 13vw;
+    bottom: 1.13vw;
+}
+
+.seccion-porque {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
+.porque-izquierda-wrapper {
+    width: 50%;
+    background-color: var(--color-dark-a);
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.porque-izquierda {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vw;
+    padding: 3vw 0vw 0vw 26%;
+}
+
+.porque-imagen {
+    flex: 1.1;
+}
+
+.porque-imagen img {
+    width: 20.5vw;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    border: none;
+}
+
+.porque-horario {
+    width: 50%;
+    background-color: var(--color-cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5vw;
+    padding: 4vw;
+}
+
+
+/* MORNING HAPPY */
+.seccion-morning {
+    display: flex;
+    background-color: var(--color-bg);
+    padding: 4vw 8vw;
+    gap: 4vw;
+    align-items: center;
+}
+
+.morning-izquierda {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.morning-etiqueta {
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+    font-family: var(--font-body);
+    font-size: 1vw;
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.morning-etiqueta img {
+    width: 1.5vw;
+    height: 1.5vw;
+    margin-left: 5vw;
+}
+
+.morning-titulo {
+    font-family: var(--font-body);
+    font-size: 2.5vw;
+    margin-left: 5vw;
+    color: #000;
+    font-weight: 900;
+}
+
+.morning-descripcion {
+    font-family: var(--font-body);
+    font-size: 0.9vw;
+    color: var(--color-text-muted);
+    margin-left: 5vw;
+    margin-right: 3vw;
+    line-height: 1.7;
+    max-width: 90%;
+}
+
+.morning-precio-boton {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    margin-top: 1.5vw;
+    flex-wrap: nowrap;
+    position: relative;
+    left: 5vw;
+}
+
+.boton-morning {
+    background-color: var(--color-dark-a);
+    color: white;
+    border: none;
+    padding: 1vw 2.5vw;
+    border-radius: var(--radius-btn);
+    font-size: 0.8vw;
+    font-family: var(--font-body);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.morning-precio {
+    font-family: var(--font-title);
+    font-size: 1.5vw;
+    font-weight: 700;
+    color: #000;
+}
+
+.boton-precio {
+    background-color: transparent;
+    border: 0.05vw solid var(--color-dark-a);
+    color: #000;
+    padding: 1vw 2.5vw;
+    border-radius: var(--radius-btn);
+    font-size: 0.8vw;
+    font-family: var(--font-title);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.morning-derecha {
+    flex: 1.5;
+}
+
+.visita-titulo {
+    font-family: var(--font-title);
+    letter-spacing: -0.2vw;
+    word-spacing: 1vw;
+    font-size: 2.5vw;
+    font-weight: 900;
+    color: #000;
+    margin-bottom: 1.5vw;
+    text-align: center;
+    margin-right: 8vw;
+}
+
+.visita-grid {
+    display: flex;
+    gap: 1vw;
+}
+
+.visita-item {
+    flex: 1;
+}
+
+.visita-item img {
+    width: 98%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 0.5vw;
+    margin-bottom: 0.5vw;
+    position: relative;
+    right: 5vw;
+}
+
+.visita-nombre {
+    font-family: var(--font-body);
+    font-size: 0.9vw;
+    color: #000;
+    font-weight: 700;
+    margin-top: 0.7vw;
+    position: relative;
+    right: 6vw;
+}
+
+.visita-nombre2 {
+    font-family: var(--font-body);
+    font-size: 0.9vw;
+    margin-top: 0.7vw;
+    color: #000;
+    font-weight: 700;
+    position: relative;
+    right: 6vw;
+}
+
+
+/* WOW YOUR HOUR */
+.seccion-wow {
+    position: relative;
+    overflow: hidden;
+}
+
+.wow-imagen {
+    width: 100vw;
+    height: 20vw;
+    object-fit: cover;
+    display: block;
+}
+
+.wow-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.wow-texto {
+    padding-left: 13%;
+    color: white;
+    max-width: 32%;
+}
+
+.boton-wow {
+    background-color: var(--color-dark-a);
+    color: white;
+    border: none;
+    padding: 1vw 2.5vw;
+    border-radius: var(--radius-btn);
+    font-size: 0.8vw;
+    font-family: var(--font-body);
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1vw;
+}
+
+.wow-titulo {
+    font-family: var(--font-title);
+    font-size: 2.5vw;
+    letter-spacing: -0.3vw;
+    word-spacing: 1vw;
+    font-weight: 900;
+    margin-bottom: 1vw;
+}
+
+.wow-descripcion {
+    font-family: var(--font-body);
+    font-size: 1vw;
+    line-height: 1.7;
+}
+
+
+/* TESTIMONIOS */
+.seccion-testimonios {
+    display: flex;
+    justify-content: space-around;
+    padding: 4vw 8vw;
+    background-color: var(--color-bg-testimonios);
+    gap: 2vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.testimonio {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    flex: 1;
+}
+
+.linea-vertical-testimonio {
+    width: 0.05vw;
+    height: 5.63vw;
+    background-color: var(--divider);
+    align-self: stretch;
+}
+
+.testimonio img {
+    width: 4vw;
+    height: 4vw;
+    border-radius: var(--radius-img);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.testimonio-texto h3 {
+    font-family: var(--font-title);
+    font-size: 1.1vw;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 0.3vw;
+}
+
+.testimonio-texto p {
+    font-family: var(--font-title);
+    font-size: 0.8vw;
+    font-weight: 900;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+}
+
+
+/* FOOTER */
+.pie-pagina {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-dark-a);
+    padding: 3vw 8vw;
+    gap: 2vw;
+}
+
+.footer-izquierda {
+    margin-left: 5vw;
+}
+
+.footer-izquierda h3 {
+    font-family: var(--font-title);
+    font-size: 1.5vw;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 0.5vw;
+}
+
+.footer-izquierda p {
+    font-family: var(--font-body);
+    font-size: 0.8vw;
+    color: var(--color-text-light);
+}
+
+.footer-iconos {
+    display: flex;
+}
+
+.footer-iconos img {
+    width: 2.5vw;
+    height: 2.5vw;
+    margin-left: 2vw;
+}
+
+.footer-botones {
+    display: flex;
+    gap: 1vw;
+}
+
+.footer-input {
+    padding: 0.8vw 0.5vw;
+    border-radius: var(--radius-btn);
+    border: none;
+    font-size: 0.8vw;
+    text-align: center;
+    font-family: var(--font-body);
+    width: 12vw;
+}
+
+.boton-suscribirse {
+    background-color: var(--color-primary);
+    color: white;
+    text-align: center;
+    border: none;
+    padding: 0.8vw 2vw;
+    border-radius: var(--radius-btn);
+    font-size: 0.8vw;
+    font-family: var(--font-body);
+    font-weight: 700;
+    margin-right: 5vw;
+}
+
+.boton-blanco,
+.boton-naranja,
+.boton-blanco-oscuro,
+.boton-horario,
+.boton-morning,
+.boton-precio,
+.boton-wow,
+.boton-suscribirse {
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.boton-blanco:hover,
+.boton-naranja:hover,
+.boton-blanco-oscuro:hover,
+.boton-horario:hover,
+.boton-morning:hover,
+.boton-precio:hover,
+.boton-wow:hover,
+.boton-suscribirse:hover {
+    transform: scale(1.05);
+    filter: brightness(0.95);
+}
+
+.boton-blanco:active,
+.boton-naranja:active,
+.boton-blanco-oscuro:active,
+.boton-horario:active,
+.boton-morning:active,
+.boton-precio:active,
+.boton-wow:active,
+.boton-suscribirse:active {
+    transform: scale(0.95);
+    box-shadow: inset 0 0.1vw 0.3vw rgba(0, 0, 0, 0.3);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1024px) {
+
+    /* Nav */
+    .nav-box {
+        padding: 0 6%;
+    }
+
+    .text1 {
+        font-size: 3vw;
+        margin-left: 4vw;
+    }
+
+    .box-right {
+        font-size: 2vw;
+        gap: 3vw;
+        margin-right: 4vw;
+    }
+
+    .pagina-activa {
+        font-size: 1vw;
+    }
+
+    /* Hero */
+    .text2 {
+        font-size: 5vw;
+        max-width: 60%;
+        margin-left: -3vw;
+    }
+
+    .texto-descripcion {
+        font-size: 1.6vw;
+        margin-top: -5vw;
+        margin-left: -3vw;
+        max-width: 40%;
+    }
+
+    .boton-blanco,
+    .boton-naranja {
+        font-size: 1.4vw;
+        padding: 1.5vw 2vw;
+        border-radius: 5vw;
+        margin-left: -3vw;
+        margin-right: 4vw;
+    }
+
+    /* Featurress */
+    .tarjeta-cafe {
+        max-width: 40%;
+        padding: 0 3vw;
+        gap: 2vw;
+    }
+
+    .contenedor-tarjetas {
+        flex-wrap: wrap;
+        gap: 4vw 0;
+    }
+
+    .tarjeta-cafe img {
+        width: 10vw;
+        height: 10vw;
+    }
+
+    .tarjeta-cafe h3 {
+        font-size: 3vw;
+    }
+
+    .tarjeta-cafe p {
+        font-size: 1.5vw;
+    }
+
+    .titulo-destacados {
+        font-size: 4vw;
+    }
+
+    .linea-vertical {
+        display: none;
+    }
+
+    /* Why choose us */
+    .seccion-porque {
+        flex-direction: column;
+    }
+
+    .porque-izquierda-wrapper {
+        width: 100%;
+        min-height: 50vw;
+        position: relative;
+    }
+
+    .porque-izquierda {
+        flex: 1;
+        padding: 6vw 4vw 6vw 10%;
+        gap: 3vw;
+        justify-content: center;
+    }
+
+    .porque-izquierda h2 {
+        font-size: 5vw;
+        margin-top: 0;
+    }
+
+    .porque-izquierda p {
+        font-size: 1.8vw;
+        max-width: 100%;
+        margin-top: 0;
+    }
+
+    .boton-blanco-oscuro {
+        font-size: 1.6vw;
+        padding: 1.5vw 3vw;
+        border-radius: 5vw;
+    }
+
+    .porque-imagen {
+        flex: 0 0 40%;
+        position: relative;
+        overflow: hidden;
+        min-height: 50vw;
+    }
+
+    .porque-imagen img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .porque-horario {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 6vw 8vw;
+        gap: 4vw;
+    }
+
+    .horario-label {
+        position: static;
+        font-size: 3vw;
+        flex-basis: 100%;
+    }
+
+    .horario-hora {
+        position: static;
+        font-size: 5vw;
+        flex-basis: 100%;
+        text-align: center;
+    }
+
+    .horario-descripcion {
+        position: static;
+        font-size: 2vw;
+        margin-top: -1vw;
+        margin-bottom: -2vw;
+        text-align: center;
+        max-width: 80%;
+    }
+
+    .boton-horario {
+        position: static;
+        font-size: 1.6vw;
+        padding: 1.5vw 4vw;
+        border-radius: 5vw;
+        margin: 0 auto;
+    }
+
+    /* Morning Happy */
+    .seccion-morning {
+        flex-direction: column;
+        padding: 8vw 10%;
+        gap: 6vw;
+    }
+
+    .morning-izquierda,
+    .morning-derecha {
+        width: 100%;
+        flex: unset;
+    }
+
+    .morning-etiqueta {
+        font-size: 2vw;
+        justify-content: center;
+    }
+
+    .morning-etiqueta img {
+        width: 3vw;
+        height: 3vw;
+        margin-left: 0;
+    }
+
+    .morning-titulo {
+        font-size: 5vw;
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .morning-descripcion {
+        font-size: 1.8vw;
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .morning-precio-boton {
+        left: 0;
+        justify-content: center;
+    }
+
+    .boton-morning,
+    .boton-precio {
+        font-size: 1.6vw;
+        padding: 1.5vw 3vw;
+        border-radius: 5vw;
+    }
+
+    .morning-precio {
+        font-size: 2.5vw;
+    }
+
+    .visita-titulo {
+        font-size: 5vw;
+        margin-right: 0;
+        letter-spacing: normal;
+        word-spacing: normal;
+        text-align: center;
+        margin-bottom: 3vw;
+    }
+
+    .visita-grid {
+        gap: 3vw;
+    }
+
+    .visita-item img {
+        right: 0;
+        width: 100%;
+    }
+
+    .visita-nombre,
+    .visita-nombre2 {
+        right: 0;
+        font-size: 1.8vw;
+        text-align: center;
+    }
+
+    /* Wow Your Hour */
+    .wow-imagen {
+        height: 35vw;
+    }
+
+    .wow-texto {
+        max-width: 55%;
+        padding-left: 8%;
+    }
+
+    .wow-titulo {
+        font-size: 4.5vw;
+        letter-spacing: normal;
+        word-spacing: normal;
+        margin-left: 2vw;
+    }
+
+    .wow-descripcion {
+        font-size: 1.8vw;
+        margin-left: 2vw;
+    }
+
+    .boton-wow {
+        font-size: 1.6vw;
+        padding: 1.5vw 3vw;
+        border-radius: 5vw;
+        margin-left: 2vw;
+    }
+
+    /* Testimonios */
+    .seccion-testimonios {
+        flex-direction: column;
+        margin: 0;
+        padding: 8vw 10%;
+        gap: 4vw;
+    }
+
+    .testimonio {
+        gap: 3vw;
+    }
+
+    .linea-vertical-testimonio {
+        display: none;
+    }
+
+    .testimonio img {
+        width: 8vw;
+        height: 8vw;
+    }
+
+    .testimonio-texto h3 {
+        font-size: 2.5vw;
+    }
+
+    .testimonio-texto p {
+        font-size: 1.8vw;
+    }
+
+    /* Footer */
+    .pie-pagina {
+        flex-direction: column;
+        padding: 8vw 10%;
+        gap: 4vw;
+        text-align: center;
+    }
+
+    .footer-izquierda {
+        margin-left: 0;
+    }
+
+    .footer-izquierda h3 {
+        font-size: 3.5vw;
+    }
+
+    .footer-izquierda p {
+        font-size: 2vw;
+    }
+
+    .footer-iconos {
+        justify-content: center;
+    }
+
+    .footer-iconos img {
+        width: 5vw;
+        height: 5vw;
+        margin-left: 3vw;
+    }
+
+    .footer-botones {
+        flex-direction: column;
+        align-items: center;
+        gap: 3vw;
+    }
+
+    .footer-input {
+        width: 60vw;
+        font-size: 2vw;
+        padding: 2vw 3vw;
+        border-radius: 5vw;
+    }
+
+    .boton-suscribirse {
+        font-size: 2vw;
+        padding: 2vw 6vw;
+        border-radius: 5vw;
+        margin-right: 0;
+    }
+}
+
+
+@media (max-width: 640px) {
+
+    /* Nav — hamburguesa */
+    header {
+        height: auto;
+    }
+
+    .nav-box {
+        height: auto;
+        padding: 3vw 5%;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .text1 {
+        font-size: 5vw;
+        margin-left: 0;
+    }
+
+    .hamburger {
+        display: flex;
+        gap: 1.5vw;
+        padding: 2vw;
+    }
+
+    .hamburger span {
+        width: 6vw;
+        height: 0.7vw;
+        border-radius: 0.5vw;
+        background-color: #000;
+    }
+
+    .hamburger-toggle:checked+.hamburger span:nth-child(1) {
+        transform: translateY(2.2vw) rotate(45deg);
+    }
+
+    .hamburger-toggle:checked+.hamburger span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger-toggle:checked+.hamburger span:nth-child(3) {
+        transform: translateY(-2.2vw) rotate(-45deg);
+    }
+
+    .box-right {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4vw;
+        width: 100%;
+        padding: 3vw 0 2vw;
+        font-size: 4vw;
+        letter-spacing: normal;
+    }
+
+    .hamburger-toggle:checked~.box-right {
+        display: flex;
+    }
+
+    .pagina-activa {
+        font-size: 2.5vw;
+    }
+
+    /* Hero */
+    .imagen2 {
+        height: 90vw;
+        object-fit: cover;
+    }
+
+    .text2 {
+        font-size: 8vw;
+        top: 8%;
+        left: 6%;
+        margin-left: -1vw;
+        max-width: 85%;
+        line-height: 1.2;
+    }
+
+    .texto-descripcion {
+        top: 30%;
+        left: 6%;
+        font-size: 3vw;
+        max-width: 85%;
+        margin-left: -1vw;
+        margin-top: 3.5vw;
+    }
+
+    .contenedor-botones {
+        top: 55%;
+        left: 6%;
+        gap: 3vw;
+        flex-wrap: wrap;
+    }
+
+    .boton-blanco,
+    .boton-naranja {
+        font-size: 3vw;
+        padding: 2.5vw 4vw;
+        border-radius: 8vw;
+        margin-left: -1vw;
+    }
+
+    /* Featurress */
+    .seccion-destacados {
+        padding: 10vw 6%;
+    }
+
+    .titulo-destacados {
+        font-size: 6vw;
+        margin-top: 0;
+        margin-bottom: 4vw;
+    }
+
+    .contenedor-tarjetas {
+        flex-direction: column;
+        align-items: center;
+        gap: 8vw;
+    }
+
+    .tarjeta-cafe {
+        max-width: 80%;
+        padding: 0;
+        gap: 3vw;
+    }
+
+    .tarjeta-cafe img {
+        width: 20vw;
+        height: 20vw;
+    }
+
+    .tarjeta-cafe h3 {
+        font-size: 5.5vw;
+    }
+
+    .tarjeta-cafe p {
+        font-size: 3.5vw;
+    }
+
+    /* Why choose us */
+    .porque-izquierda-wrapper {
+        flex-direction: column;
+        min-height: unset;
+    }
+
+    .porque-izquierda {
+        padding: 10vw 8%;
+        align-items: center;
+        text-align: center;
+        gap: 4vw;
+    }
+
+    .porque-izquierda h2 {
+        font-size: 7vw;
+    }
+
+    .porque-izquierda p {
+        font-size: 3.5vw;
+        max-width: 100%;
+    }
+
+    .boton-blanco-oscuro {
+        font-size: 3.5vw;
+        padding: 2.5vw 6vw;
+        border-radius: 8vw;
+    }
+
+    .porque-imagen {
+        width: 100%;
+        flex: none;
+        position: static;
+        height: 60vw;
+        overflow: hidden;
+    }
+
+    .porque-imagen img {
+        position: static;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .porque-horario {
+        padding: 10vw 8%;
+        gap: 3vw;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .horario-label {
+        font-size: 4.5vw;
+    }
+
+    .horario-hora {
+        font-size: 8vw;
+    }
+
+    .horario-descripcion {
+        margin: 0;
+        font-size: 3.5vw;
+        max-width: 100%;
+    }
+
+    .boton-horario {
+        font-size: 3.5vw;
+        padding: 2.5vw 8vw;
+        border-radius: 8vw;
+        margin-top: 3vw;
+    }
+
+    /* Morning Happy */
+    .seccion-morning {
+        padding: 10vw 6%;
+        gap: 8vw;
+    }
+
+    .morning-etiqueta {
+        font-size: 3.5vw;
+        justify-content: center;
+    }
+
+    .morning-etiqueta img {
+        width: 5vw;
+        height: 5vw;
+    }
+
+    .morning-titulo {
+        font-size: 7vw;
+        margin-top: 2vw;
+    }
+
+    .morning-descripcion {
+        font-size: 3.5vw;
+        margin-top: 3vw;
+        margin-bottom: 2vw;
+    }
+
+    .boton-morning,
+    .boton-precio {
+        font-size: 3.5vw;
+        padding: 2.5vw 5vw;
+        border-radius: 8vw;
+    }
+
+    .morning-precio {
+        font-size: 4.5vw;
+    }
+
+    .visita-titulo {
+        font-size: 7vw;
+        margin-bottom: 5vw;
+        margin-top: 5vw;
+    }
+
+    .visita-grid {
+        flex-direction: column;
+        gap: 6vw;
+    }
+
+    .visita-item {
+        flex: none;
+        width: 100%;
+    }
+
+    .visita-item img {
+        width: 100%;
+        right: 0;
+    }
+
+    .visita-nombre,
+    .visita-nombre2 {
+        font-size: 3.5vw;
+        right: 0;
+        text-align: center;
+    }
+
+    /* Wow Your Hour */
+    .wow-imagen {
+        height: 70vw;
+    }
+
+    .wow-texto {
+        max-width: 85%;
+        padding-left: 6%;
+    }
+
+    .wow-titulo {
+        font-size: 7vw;
+    }
+
+    .wow-descripcion {
+        font-size: 3.5vw;
+    }
+
+    .boton-wow {
+        font-size: 3.5vw;
+        padding: 2.5vw 6vw;
+        border-radius: 8vw;
+    }
+
+    /* Testimonios */
+    .seccion-testimonios {
+        padding: 10vw 6%;
+        gap: 6vw;
+    }
+
+    .testimonio {
+        gap: 4vw;
+    }
+
+    .testimonio img {
+        width: 14vw;
+        height: 14vw;
+    }
+
+    .testimonio-texto h3 {
+        font-size: 4.5vw;
+    }
+
+    .testimonio-texto p {
+        font-size: 3.5vw;
+    }
+
+    /* Footer */
+    .pie-pagina {
+        padding: 10vw 6%;
+        gap: 6vw;
+    }
+
+    .footer-izquierda h3 {
+        font-size: 5.5vw;
+        margin-bottom: 2vw;
+    }
+
+    .footer-izquierda p {
+        font-size: 3.5vw;
+    }
+
+    .footer-iconos img {
+        width: 8vw;
+        height: 8vw;
+        margin-left: 4vw;
+    }
+
+    .footer-input {
+        width: 80vw;
+        font-size: 3.5vw;
+        padding: 3vw 4vw;
+    }
+
+    .boton-suscribirse {
+        width: 80vw;
+        font-size: 3.5vw;
+        padding: 3vw 6vw;
+    }
+}
+
+
+@media (max-width: 380px) {
+
+    .text1 {
+        font-size: 6vw;
+    }
+
+    .text2 {
+        font-size: 9vw;
+    }
+
+    .texto-descripcion {
+        font-size: 3.5vw;
+        top: 32%;
+    }
+
+    .contenedor-botones {
+        top: 60%;
+        flex-direction: column;
+        gap: 2vw;
+    }
+
+    .boton-blanco,
+    .boton-naranja {
+        font-size: 3.5vw;
+        width: fit-content;
+    }
+
+    .tarjeta-cafe {
+        max-width: 95%;
+    }
+
+    .visita-grid {
+        gap: 8vw;
+    }
+
+    .footer-input,
+    .boton-suscribirse {
+        width: 88vw;
+    }
+}
