@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<!--
+  DIRECTORIO DE USUARIOS
+  =====================
+  Aplicación web que muestra un directorio de usuarios obtenido de la API RandomUser.
+  Características:
+  - Visualización de tarjetas de usuarios en grid responsivo
+  - Sistema de favoritos persistente con localStorage
+  - Caché de usuarios para evitar solicitudes repetidas a la API
+  - Pestaña para filtrar entre "Todos" y "Favoritos"
+  - Detalle completo de cada usuario en tarjeta.html
+  - Búsqueda de duplicados por email y foto
+  
+  API: https://randomuser.me/api/
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Directorio de Usuarios</title>
+<style>
+  :root {
+    --primary: #789eee;
+    --primary-dark: #2b3a55;
+    --bg: #f0f2f5;
+    --card-bg: #ffffff;
+    --text: #333333;
+    --text-light: #666666;
+    --star: #f5c518;
+    --star-empty: #ccc;
+    --male: #4a90d9;
+    --female: #d94f8c;
+    --radius: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: var(--bg);
+    padding: 20px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  header h1 {
+    color: var(--primary-dark);
+    font-size: 28px;
+    margin-bottom: 5px;
+  }
+
+  header p {
+    color: var(--text-light);
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .btn-recargar {
+    display: inline-block;
+    background-color: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .btn-recargar:hover {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 25px;
+  }
+
+  .tab {
+    background-color: var(--card-bg);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 10px 30px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .tab:first-child {
+    border-radius: var(--radius) 0 0 var(--radius);
+    border-right: none;
+  }
+
+  .tab:last-child {
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .tab.active {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .tab:hover:not(.active) {
+    background-color: #e8f0fe;
+  }
+
+  /* CONTENEDORES */
+  #seccionTodos, #seccionFavoritos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  #seccionFavoritos {
+    display: none;
+  }
+
+  .vacio {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--text-light);
+    font-size: 18px;
+    width: 100%;
+  }
+
+  .vacio .icono {
+    font-size: 50px;
+    margin-bottom: 10px;
+  }
+
+  /* TARJETA */
+  .tarjeta {
+    background: var(--card-bg);
+    border: 1px solid #ddd;
+    border-radius: var(--radius);
+    padding: 15px;
+    width: 180px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .tarjeta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  }
+
+  .tarjeta img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .tarjeta .nombre {
+    font-weight: bold;
+    font-size: 15px;
+    margin-top: 10px;
+    color: var(--text);
+  }
+
+  .tarjeta .genero {
+    font-size: 13px;
+    margin-top: 5px;
+  }
+
+  .tarjeta .edad {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 3px;
+  }
+
+  .hombre { color: var(--male); }
+  .mujer { color: var(--female); }
+
+  /* ESTRELLA FAVORITO */
+  .estrella {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 22px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    z-index: 2;
+    transition: transform 0.2s;
+  }
+
+  .estrella:hover {
+    transform: scale(1.3);
+  }
+
+  .estrella.activa {
+    color: var(--star);
+    text-shadow: 0 0 6px rgba(245, 197, 24, 0.5);
+  }
+
+  .estrella.inactiva {
+    color: var(--star-empty);
+  }
+
+  /* CARGANDO */
+  #cargando {
+    text-align: center;
+    padding: 60px;
+    font-size: 18px;
+    color: var(--text-light);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Directorio de Usuarios</h1>
+  <p>Haz clic en una tarjeta para ver todos sus datos · Clic en la estrella para guardar favoritos</p>
+  <button class="btn-recargar" onclick="recargarUsuarios()">Obtener nuevos usuarios</button>
+</header>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" id="tabTodos" onclick="cambiarTab('todos')">Todos (102)</button>
+  <button class="tab" id="tabFavoritos" onclick="cambiarTab('favoritos')">Favoritos (0)</button>
+</div>
+
+<!-- SECCION TODOS -->
+<div id="cargando">Cargando usuarios...</div>
+<div id="seccionTodos"></div>
+
+<!-- SECCION FAVORITOS -->
+<div id="seccionFavoritos"></div>
+
+<script>
+  // ============================================
+  // CONSTANTES
+  // ============================================
+  var TOTAL = 102;              // Número total de usuarios a obtener
+  var CLAVE_CACHE = 'usuarios_v5';  // Clave para almacenar en localStorage
+  var seedActual = 'directorio100v1'; // Seed para la API de RandomUser
+
+  // ============================================
+  // VARIABLES GLOBALES
+  // ============================================
+  var usuarios = [];    // Array que almacena todos los usuarios
+  var tabActual = 'todos'; // Pestaña actualmente visible
+
+  // ============================================
+  // LOCALSTORAGE: FAVORITOS (usa email como ID)
+  // ============================================
+
+  function obtenerFavoritos() {
+    // Recupera favoritos del localStorage
+    // Retorna array vacío si no hay datos guardados
+    var datos = localStorage.getItem('favoritos');
+    if (datos === null) {
+      return [];
+    }
+    return JSON.parse(datos);
+  }
+
+  function guardarFavoritos(lista) {
+    // Guarda lista de favoritos en localStorage (convertida a JSON)
+    localStorage.setItem('favoritos', JSON.stringify(lista));
+  }
+
+  function esFavorito(email) {
+    // Busca si un usuario (por email) está en la lista de favoritos
+    // Retorna true si existe, false en caso contrario
+    var favoritos = obtenerFavoritos();
+    for (var i = 0; i < favoritos.length; i++) {
+      if (favoritos[i].email === email) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function toggleFavorito(indice, evento) {
+    // Alterna el estado de favorito de un usuario
+    // Si no era favorito, lo agrega; si lo era, lo elimina
+    evento.stopPropagation(); // Evita que se abra la tarjeta
+
+    var usuario = usuarios[indice];
+    var favoritos = obtenerFavoritos();
+    var posicion = -1;
+
+    // Busca si el usuario ya está en favoritos
+    for (var i = 0; i < favoritos.length; i++) {
+      if (favoritos[i].email === usuario.email) {
+        posicion = i;
+        break;
+      }
+    }
+
+    // Agrega o quita según corresponda
+    if (posicion === -1) {
+      favoritos.push(usuario);
+    } else {
+      favoritos.splice(posicion, 1);
+    }
+
+    guardarFavoritos(favoritos);
+    actualizarEstrellas();
+    actualizarContadorFavoritos();
+
+    if (tabActual === 'favoritos') {
+      mostrarFavoritos();
+    }
+  }
+
+  function actualizarEstrellas() {
+    // Actualiza todas las estrellas en las tarjetas
+    // Las marca como "activa" (llena) si son favoritos, "inactiva" (vacía) si no
+    var estrellas = document.querySelectorAll('.estrella');
+    for (var i = 0; i < estrellas.length; i++) {
+      var email = estrellas[i].getAttribute('data-email');
+      if (esFavorito(email)) {
+        estrellas[i].textContent = '\u2605'; // Estrella llena
+        estrellas[i].className = 'estrella activa';
+      } else {
+        estrellas[i].textContent = '\u2606'; // Estrella vacía
+        estrellas[i].className = 'estrella inactiva';
+      }
+    }
+  }
+
+  function actualizarContadorFavoritos() {
+    // Actualiza el número que aparece en la pestaña de favoritos
+    var favoritos = obtenerFavoritos();
+    var tabFav = document.getElementById('tabFavoritos');
+    tabFav.textContent = 'Favoritos (' + favoritos.length + ')';
+  }
+
+  // ============================================
+  // FILTRAR DUPLICADOS POR EMAIL Y POR FOTO
+  // ============================================
+  // Elimina usuarios con emails duplicados o la misma foto
+  // Asegura exactamente 102 usuarios únicos
+  function filtrarDuplicados(lista) {
+    var vistosEmail = [];
+    var vistosFoto = [];
+    var unicos = [];
+
+    for (var i = 0; i < lista.length; i++) {
+      if (unicos.length >= TOTAL) {
+        break; // Ya tenemos suficientes usuarios
+      }
+
+      var email = lista[i].email;
+      var foto = lista[i].picture.large;
+      var repetido = false;
+
+      // Verifica si el email ya fue visto
+      for (var j = 0; j < vistosEmail.length; j++) {
+        if (vistosEmail[j] === email) {
+          repetido = true;
+          break;
+        }
+      }
+
+      // Verifica si la foto ya fue vista
+      if (repetido === false) {
+        for (var j = 0; j < vistosFoto.length; j++) {
+          if (vistosFoto[j] === foto) {
+            repetido = true;
+            break;
+          }
+        }
+      }
+
+      // Si no es repetido, lo agrega a la lista
+      if (repetido === false) {
+        vistosEmail.push(email);
+        vistosFoto.push(foto);
+        unicos.push(lista[i]);
+      }
+    }
+
+    return unicos;
+  }
+
+  // ============================================
+  // CARGAR USUARIOS (con caché en localStorage)
+  // ============================================
+  // Intenta cargar de caché. Si no hay datos, obtiene nuevos de la API
+  function cargarUsuarios() {
+    var cargando = document.getElementById('cargando');
+    var cache = localStorage.getItem(CLAVE_CACHE);
+
+    // Si hay caché, lo usa inmediatamente
+    if (cache !== null) {
+      usuarios = JSON.parse(cache);
+      cargando.style.display = 'none';
+      mostrarTodos();
+      actualizarContadorFavoritos();
+      document.getElementById('tabTodos').textContent = 'Todos (' + usuarios.length + ')';
+      return;
+    }
+
+    // Si no hay caché, obtiene nuevos datos
+    fetchDesdeAPI();
+  }
+
+  // Obtiene usuarios de la API RandomUser
+  function fetchDesdeAPI() {
+    var cargando = document.getElementById('cargando');
+
+    // Solicita 150 usuarios (para poder filtrar duplicados)
+    fetch('https://randomuser.me/api/?results=150&seed=' + seedActual)
+      .then(function(respuesta) {
+        return respuesta.json();
+      })
+      .then(function(datos) {
+        // Filtra duplicados para obtener exactamente 102
+        usuarios = filtrarDuplicados(datos.results);
+
+        // Guarda en caché para evitar solicitudes repetidas
+        localStorage.setItem(CLAVE_CACHE, JSON.stringify(usuarios));
+
+        // Muestra los usuarios
+        cargando.style.display = 'none';
+        mostrarTodos();
+        actualizarContadorFavoritos();
+        document.getElementById('tabTodos').textContent = 'Todos (' + usuarios.length + ')';
+      })
+      .catch(function(error) {
+        cargando.textContent = 'Error al cargar. Revisa tu conexion.';
+        console.log(error);
+      });
+  }
+
+  // Limpia el caché y obtiene nuevos usuarios
+  function recargarUsuarios() {
+    localStorage.removeItem(CLAVE_CACHE);
+    usuarios = [];
+    document.getElementById('seccionTodos').innerHTML = '';
+    document.getElementById('cargando').style.display = 'block';
+    document.getElementById('cargando').textContent = 'Cargando usuarios...';
+
+    // Usa timestamp para obtener usuarios diferentes
+    seedActual = 'directorio' + Date.now();
+
+    fetchDesdeAPI();
+  }
+
+  // ============================================
+  // GENERAR HTML DE TARJETAS
+  // ============================================
+  // Crea el HTML para cada usuario en forma de tarjeta
+
+  // Tarjeta para la lista de "Todos"
+  function crearTarjetaHTML(u, indice) {
+    var generoTexto = u.gender === 'male' ? 'Hombre' : 'Mujer';
+    var claseGenero = u.gender === 'male' ? 'hombre' : 'mujer';
+    var claseEstrella = esFavorito(u.email) ? 'estrella activa' : 'estrella inactiva';
+    var simboloEstrella = esFavorito(u.email) ? '\u2605' : '\u2606';
+
+    var html =
+      '<div class="tarjeta" onclick="verTarjeta(' + indice + ')">' +
+        '<span class="' + claseEstrella + '" data-email="' + u.email + '" onclick="toggleFavorito(' + indice + ', event)">' + simboloEstrella + '</span>' +
+        '<img src="' + u.picture.large + '">' +
+        '<div class="nombre">' + u.name.first + ' ' + u.name.last + '</div>' +
+        '<div class="genero ' + claseGenero + '">' + generoTexto + '</div>' +
+        '<div class="edad">' + u.dob.age + ' a\u00f1os</div>' +
+      '</div>';
+
+    return html;
+  }
+
+  // Tarjeta para la lista de "Favoritos"
+  function crearTarjetaFavoritoHTML(u) {
+    var generoTexto = u.gender === 'male' ? 'Hombre' : 'Mujer';
+    var claseGenero = u.gender === 'male' ? 'hombre' : 'mujer';
+
+    var html =
+      '<div class="tarjeta" onclick="verTarjetaFavorito(\'' + u.email + '\')">' +
+        '<span class="estrella activa" data-email="' + u.email + '" onclick="quitarFavorito(\'' + u.email + '\', event)">\u2605</span>' +
+        '<img src="' + u.picture.large + '">' +
+        '<div class="nombre">' + u.name.first + ' ' + u.name.last + '</div>' +
+        '<div class="genero ' + claseGenero + '">' + generoTexto + '</div>' +
+        '<div class="edad">' + u.dob.age + ' a\u00f1os</div>' +
+      '</div>';
+
+    return html;
+  }
+
+  // Quita un usuario de favoritos desde la lista de favoritos
+  function quitarFavorito(email, evento) {
+    evento.stopPropagation();
+
+    var favoritos = obtenerFavoritos();
+    var posicion = -1;
+
+    for (var i = 0; i < favoritos.length; i++) {
+      if (favoritos[i].email === email) {
+        posicion = i;
+        break;
+      }
+    }
+
+    if (posicion !== -1) {
+      favoritos.splice(posicion, 1);
+      guardarFavoritos(favoritos);
+      actualizarContadorFavoritos();
+      actualizarEstrellas();
+      mostrarFavoritos();
+    }
+  }
+
+  // Abre la tarjeta de detalle de un favorito
+  function verTarjetaFavorito(email) {
+    var favoritos = obtenerFavoritos();
+    var usuario = null;
+
+    for (var i = 0; i < favoritos.length; i++) {
+      if (favoritos[i].email === email) {
+        usuario = favoritos[i];
+        break;
+      }
+    }
+
+    if (usuario !== null) {
+      localStorage.setItem('usuarioSeleccionado', JSON.stringify(usuario));
+      window.location.href = 'tarjeta.html';
+    }
+  }
+
+  // ============================================
+  // MOSTRAR SECCIONES
+  // ============================================
+  // Renderiza las listas de tarjetas
+
+  // Muestra todos los usuarios
+  function mostrarTodos() {
+    var seccion = document.getElementById('seccionTodos');
+    var html = '';
+    for (var i = 0; i < usuarios.length; i++) {
+      html = html + crearTarjetaHTML(usuarios[i], i);
+    }
+    seccion.innerHTML = html;
+  }
+
+  // Muestra solo los usuarios favoritos
+  function mostrarFavoritos() {
+    var seccion = document.getElementById('seccionFavoritos');
+    var favoritos = obtenerFavoritos();
+
+    if (favoritos.length === 0) {
+      seccion.innerHTML =
+        '<div class="vacio">' +
+          '<div class="icono">\u2606</div>' +
+          '<div>No hay usuarios favoritos a\u00fan</div>' +
+        '</div>';
+      return;
+    }
+
+    var html = '';
+    for (var i = 0; i < favoritos.length; i++) {
+      html = html + crearTarjetaFavoritoHTML(favoritos[i]);
+    }
+    seccion.innerHTML = html;
+  }
+
+  // ============================================
+  // CAMBIAR TAB
+  // ============================================
+  // Alterna entre "Todos" y "Favoritos"
+
+  function cambiarTab(tab) {
+    tabActual = tab;
+
+    var tabTodos = document.getElementById('tabTodos');
+    var tabFavoritos = document.getElementById('tabFavoritos');
+    var seccionTodos = document.getElementById('seccionTodos');
+    var seccionFavoritos = document.getElementById('seccionFavoritos');
+
+    if (tab === 'todos') {
+      // Activa la pestaña "Todos"
+      tabTodos.className = 'tab active';
+      tabFavoritos.className = 'tab';
+      seccionTodos.style.display = 'flex';
+      seccionFavoritos.style.display = 'none';
+      mostrarTodos();
+    } else {
+      // Activa la pestaña "Favoritos"
+      tabTodos.className = 'tab';
+      tabFavoritos.className = 'tab active';
+      seccionTodos.style.display = 'none';
+      seccionFavoritos.style.display = 'flex';
+      mostrarFavoritos();
+    }
+  }
+
+  // ============================================
+  // IR A LA TARJETA INDIVIDUAL
+  // ============================================
+  // Guarda el usuario en localStorage y navega a tarjeta.html
+
+  function verTarjeta(indice) {
+    var usuario = usuarios[indice];
+    localStorage.setItem('usuarioSeleccionado', JSON.stringify(usuario));
+    window.location.href = 'tarjeta.html';
+  }
+
+  // ============================================
+  // EJECUTAR AL CARGAR LA PÁGINA
+  // ============================================
+  cargarUsuarios();
+</script>
+
+</body>
+</html>

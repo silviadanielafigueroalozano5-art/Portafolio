@@ -1,0 +1,342 @@
+<!doctype html>
+<!--
+  TARJETA DE PERFIL DE USUARIO
+  ============================
+  Página de detalle que muestra toda la información de un usuario seleccionado.
+  
+  Características:
+  - Carga datos desde localStorage (enviados por index.html)
+  - Avatar circular de alta resolución
+  - Botón para volver al directorio
+  - Estrella interactiva para marcar/desmarcar favoritos
+  - Campos de información personal (nombre, edad, género, etc.)
+  - Datos de contacto (correo, teléfono, dirección)
+  - Información de ubicación con enlaces a Google Maps
+  - Zona horaria y coordenadas geográficas
+  - Información de registro de usuario
+  
+  Navegación:
+  - Botón "Volver" → index.html
+  - Click en tarjeta en index.html → tarjeta.html
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Tarjeta de Perfil</title>
+</head>
+<body>
+
+  <!-- Barra superior -->
+  <div class="barra-superior">
+    <a href="index.html" class="btn-volver">← Volver</a>
+    <span class="estrella-grande" id="estrellaFav" onclick="toggleFavoritoTarjeta()">☆</span>
+  </div>
+
+  <!-- Foto -->
+  <div class="avatar">
+    <img id="foto" alt="Foto de perfil">
+  </div>
+
+  <!-- Titulo (Mr, Mrs...) -->
+  <div class="titulo">
+    <h1 id="tituloNombre"></h1>
+  </div>
+
+  <!-- Nombre y apellido -->
+  <div class="nombre">
+    <h1 id="nombre"></h1>
+    <h1 id="apellido"></h1>
+  </div>
+
+  <!-- Genero -->
+  <div class="campo">
+    <span class="etiqueta">Genero</span>
+    <span id="genero"></span>
+  </div>
+
+  <!-- Fecha nacimiento -->
+  <div class="campo">
+    <span class="etiqueta">Fecha de nacimiento</span>
+    <span id="fechaNacimiento"></span>
+  </div>
+
+  <!-- Edad -->
+  <div class="campo">
+    <span class="etiqueta">Edad</span>
+    <span id="edad"></span>
+  </div>
+
+  <!-- Correo -->
+  <div class="campo">
+    <span class="etiqueta">Correo</span>
+    <span id="correo"></span>
+  </div>
+
+  <!-- Telefono -->
+  <div class="campo">
+    <span class="etiqueta">Telefono</span>
+    <span id="telefono"></span>
+  </div>
+
+  <!-- Direccion -->
+  <div class="campo">
+    <span class="etiqueta">Direccion</span>
+    <span id="direccion"></span>
+  </div>
+
+  <!-- Ciudad -->
+  <div class="campo">
+    <span class="etiqueta">Ciudad</span>
+    <span id="ciudad"></span>
+  </div>
+
+  <!-- Estado -->
+  <div class="campo">
+    <span class="etiqueta">Estado</span>
+    <span id="estado"></span>
+  </div>
+
+  <!-- Pais -->
+  <div class="campo">
+    <span class="etiqueta">Pais</span>
+    <span id="pais"></span>
+  </div>
+
+  <!-- Codigo postal -->
+  <div class="campo">
+    <span class="etiqueta">Codigo postal</span>
+    <span id="codigoPostal"></span>
+  </div>
+
+  <!-- Nacionalidad -->
+  <div class="campo">
+    <span class="etiqueta">Nacionalidad</span>
+    <span id="nacionalidad"></span>
+  </div>
+
+  <!-- Usuario -->
+  <div class="campo">
+    <span class="etiqueta">Usuario</span>
+    <span id="usuario"></span>
+  </div>
+
+  <!-- Fecha registro -->
+  <div class="campo">
+    <span class="etiqueta">Fecha de registro</span>
+    <span id="fechaRegistro"></span>
+  </div>
+
+  <!-- Años registrado -->
+  <div class="campo">
+    <span class="etiqueta">Años registrado</span>
+    <span id="anosRegistro"></span>
+  </div>
+
+  <!-- Zona horaria -->
+  <div class="campo">
+    <span class="etiqueta">Zona horaria</span>
+    <span id="zonaHoraria"></span>
+  </div>
+
+  <!-- Coordenadas y mapa -->
+  <div class="campo mapa-campo">
+    <span class="etiqueta">Coordenadas</span>
+    <span id="coordenadas"></span>
+    <div class="mapa-links">
+      <a id="linkCoordenadas" target="_blank">Ver en Google Maps</a>
+      <a id="linkUbicacion" target="_blank">Ver ubicacion</a>
+    </div>
+  </div>
+
+  <script>
+    /* ============================================
+       CARGAR DATOS DEL USUARIO
+       ============================================
+       Lee el usuario seleccionado desde localStorage.
+       Este data fue guardado por index.html cuando hiciste clic en una tarjeta.
+       Si no hay usuario, redirige automáticamente al directorio.
+    */
+    var datos = localStorage.getItem('usuarioSeleccionado');
+
+    if (datos === null) {
+      alert('No hay usuario seleccionado. Volviendo al directorio...');
+      window.location.href = 'index.html';
+    }
+
+    var usuario = JSON.parse(datos);
+    var emailUsuario = usuario.email; // Email del usuario actualmente visto
+
+    /* ============================================
+       FAVORITOS EN TARJETA.HTML
+       ============================================
+       Sistema de favoritos que sincroniza con index.html.
+       Usa el email como identificador único del usuario.
+    */
+
+    /**
+     * obtenerFavoritos()
+     * Lee la lista de usuarios favoritos del localStorage
+     */
+    function obtenerFavoritos() {
+      var datos = localStorage.getItem('favoritos');
+      if (datos === null) {
+        return [];
+      }
+      return JSON.parse(datos);
+    }
+
+    /**
+     * guardarFavoritos(lista)
+     * Guarda la lista de favoritos en localStorage
+     */
+    function guardarFavoritos(lista) {
+      localStorage.setItem('favoritos', JSON.stringify(lista));
+    }
+
+    /**
+     * esFavorito(email)
+     * Verifica si un usuario es favorito buscando por email
+     */
+    function esFavorito(email) {
+      var favoritos = obtenerFavoritos();
+      for (var i = 0; i < favoritos.length; i++) {
+        if (favoritos[i].email === email) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    /**
+     * toggleFavoritoTarjeta()
+     * Alterna el estado favorito del usuario actual
+     * Se ejecuta al hacer clic en la estrella grande
+     */
+    function toggleFavoritoTarjeta() {
+      var favoritos = obtenerFavoritos();
+      var posicion = -1;
+
+      // Busca el usuario en favoritos por email
+      for (var i = 0; i < favoritos.length; i++) {
+        if (favoritos[i].email === emailUsuario) {
+          posicion = i;
+          break;
+        }
+      }
+
+      if (posicion === -1) {
+        // No era favorito, lo agrega
+        favoritos.push(usuario);
+      } else {
+        // Ya era favorito, lo quita
+        favoritos.splice(posicion, 1);
+      }
+
+      guardarFavoritos(favoritos);
+      actualizarEstrella();
+    }
+
+    /**
+     * actualizarEstrella()
+     * Actualiza el símbolo y estilo de la estrella según el estado
+     * Estrella llena (★) = favorito
+     * Estrella vacía (☆) = no favorito
+     */
+    function actualizarEstrella() {
+      var estrella = document.getElementById('estrellaFav');
+      if (esFavorito(emailUsuario)) {
+        estrella.textContent = '★'; // Estrella llena
+        estrella.className = 'estrella-grande activa';
+      } else {
+        estrella.textContent = '☆'; // Estrella vacía
+        estrella.className = 'estrella-grande';
+      }
+    }
+
+    /* ============================================
+       LLENAR TODOS LOS CAMPOS DE LA PÁGINA
+       ============================================
+       Toma los datos del objeto usuario y los inserta en los elementos HTML
+    */
+
+    // Foto de perfil
+    document.getElementById('foto').src = usuario.picture.large;
+
+    // Título (Mr, Mrs, Ms, etc.)
+    document.getElementById('tituloNombre').textContent = usuario.name.title;
+
+    // Nombre y apellido por separado
+    document.getElementById('nombre').textContent = usuario.name.first;
+    document.getElementById('apellido').textContent = usuario.name.last;
+
+    // Género (convertir "male"/"female" a texto en español)
+    if (usuario.gender === 'male') {
+      document.getElementById('genero').textContent = 'Masculino';
+    } else {
+      document.getElementById('genero').textContent = 'Femenino';
+    }
+
+    // Fecha de nacimiento
+    document.getElementById('fechaNacimiento').textContent = usuario.dob.date;
+
+    // Edad
+    document.getElementById('edad').textContent = usuario.dob.age + ' años';
+
+    // Correo electrónico
+    document.getElementById('correo').textContent = usuario.email;
+
+    // Teléfono
+    document.getElementById('telefono').textContent = usuario.phone;
+
+    // Dirección
+    document.getElementById('direccion').textContent = usuario.location.street.number + ' ' + usuario.location.street.name;
+
+    // Ciudad
+    document.getElementById('ciudad').textContent = usuario.location.city;
+
+    // Estado/Provincia
+    document.getElementById('estado').textContent = usuario.location.state;
+
+    // País
+    document.getElementById('pais').textContent = usuario.location.country;
+
+    // Código postal
+    document.getElementById('codigoPostal').textContent = usuario.location.postcode;
+
+    // Nacionalidad
+    document.getElementById('nacionalidad').textContent = usuario.nat;
+
+    // Nombre de usuario
+    document.getElementById('usuario').textContent = usuario.login.username;
+
+    // Fecha de registro
+    document.getElementById('fechaRegistro').textContent = usuario.registered.date;
+
+    // Años registrado (tiempo desde que se registró)
+    document.getElementById('anosRegistro').textContent = usuario.registered.age + ' años';
+
+    // Zona horaria
+    document.getElementById('zonaHoraria').textContent = usuario.location.timezone.description;
+
+    // Coordenadas geográficas
+    var lat = usuario.location.coordinates.latitude;
+    var lon = usuario.location.coordinates.longitude;
+    document.getElementById('coordenadas').textContent = 'Latitud ' + lat + ', Longitud ' + lon;
+
+    // Links a Google Maps (dos opciones de búsqueda)
+    // Por coordenadas exactas
+    document.getElementById('linkCoordenadas').href = 'https://www.google.com/maps/search/?api=1&query=' + lat + ',' + lon;
+    // Por dirección completa
+    document.getElementById('linkUbicacion').href = 'https://www.google.com/maps/search/?api=1&query=' + usuario.location.street.number + '+' + usuario.location.street.name + '+' + usuario.location.city + '+' + usuario.location.country;
+
+    /* ============================================
+       INICIALIZAR LA ESTRELLA AL CARGAR
+       ============================================
+    */
+    actualizarEstrella();
+  </script>
+
+</body>
+</html>

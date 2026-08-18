@@ -1,0 +1,205 @@
+/*
+  ESTILOS PARA TARJETA.HTML
+  =========================
+  Estilos CSS para la página de detalle de un usuario individual.
+  Define la apariencia de:
+  - Barra superior (botón volver + estrella favorito)
+  - Avatar circular del usuario
+  - Información personal en campos organizados
+  - Enlaces a Google Maps
+  - Zona horaria y coordenadas
+  
+  Max-width: 500px para adaptarse a móviles
+*/
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
+  color: #333333;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ============================================
+   BARRA SUPERIOR (Volver + Estrella)
+   ============================================
+   Contiene el botón para volver al directorio
+   y la estrella grande para marcar favoritos
+*/
+.barra-superior {
+  display: flex;
+  justify-content: space--between;
+  align-items: center;
+  margin-bottom: 15px;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.btn-volver {
+  /* Botón azul para volver al directorio */
+  display: inline-block;
+  background-color: #789eee;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.btn-volver:hover {
+  background-color: #2b3a55; /* Oscurece al pasar el mouse */
+}
+
+.estrella-grande {
+  /* Estrella interactiva grande para favoritos */
+  font-size: 32px;
+  cursor: pointer;
+  color: #ccc; /* Gris por defecto (no favorito) */
+  transition: transform 0.2s, color 0.2s;
+  -webkit-user-select: none;
+  user-select: none; /* No se puede seleccionar el texto */
+}
+
+.estrella-grande:hover {
+  transform: scale(1.2); /* Agranda al pasar el mouse */
+}
+
+.estrella-grande.activa {
+  /* Cuando es favorito */
+  color: #f5c518; /* Amarillo dorado */
+  text-shadow: 0 0 8px rgba(245, 197, 24, 0.4); /* Brillo */
+}
+
+/* ============================================
+   AVATAR
+   ============================================
+   Foto circular del usuario
+*/
+.avatar {
+  text-align: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+.avatar img {
+  /* Foto de perfil redonda */
+  width: 140px;
+  height: 140px;
+  border-radius: 50%; /* Círculo perfecto */
+  border: 4px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Sombra suave */
+}
+
+/* ============================================
+   TITULO (Mr, Mrs...)
+   ============================================
+   Prefijo de nombre (Mr, Mrs, Ms, etc.)
+*/
+.titulo {
+  text-align: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-bottom: 5px;
+}
+
+.titulo h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #789eee;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+/* ============================================
+   NOMBRE COMPLETO
+   ============================================
+   Nombre y apellido en línea separados
+*/
+.nombre {
+  text-align: center;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.nombre h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2b3a55;
+}
+
+/* ============================================
+   CADA CAMPO DE DATOS
+   ============================================
+   Estilos para todos los campos de información
+*/
+.campo {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.etiqueta {
+  /* Etiqueta del campo (ej: "Género", "Edad") */
+  font-size: 12px;
+  font-weight: bold;
+  color: #789eee; /* Azul */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.campo span:not(.etiqueta) {
+  /* Valor del campo */
+  font-size: 16px;
+  color: #333333;
+}
+
+/* ============================================
+   MAPA
+   ============================================
+   Sección de coordenadas y links a Google Maps
+*/
+.mapa-campo {
+  text-align: center;
+}
+
+.mapa-links {
+  /* Contenedor de botones */
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mapa-links a {
+  /* Botones para ver en Google Maps */
+  display: inline-block;
+  background-color: #789eee;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.mapa-links a:hover {
+  background-color: #2b3a55; /* Oscurece al pasar el mouse */
+}
